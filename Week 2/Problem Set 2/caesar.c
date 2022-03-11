@@ -3,44 +3,67 @@
 #include<string.h>
 #include<ctype.h>
 #include<stdlib.h>
-string cipher_text(string str,int key);
+int encipher(string str,int key);
+int test_arguments(int arguments,string key[]);
 int main(int argc,char* argv[])
 {
-    if(argc!=2)
+    int test=test_arguments(argc,argv);
+    if(test)
     {
-        printf("Usage : ./caesar key\n");
+        return test;
+    }
+    else
+    {
+        string plaintext=get_string("plaintext : ");
+        int k=atoi(argv[1]);        //ASCII to int
+        return encipher(plaintext,k);
+    }
+
+   
+    
+}
+int test_arguments(int arguments,string key[])
+{
+    if(arguments!=2)
+    {
+        printf("Usage : ./caesar key.\n");
         return 1;
     }
-    int k=atoi(argv[1]);        //ASCII to int
-    printf("%i\n",k);
-    string plain_text=get_string("Plaintext : ");
-    string ciphertext=cipher_text(plain_text,k);
-    printf("Cipher text :%s\n",ciphertext);
+    for(int i=0,n=strlen(key[1]);i<n;i++)
+    {
+        if(isalpha(key[1][i]))
+        {
+            printf("Usage : ./caesar key.\n");
+            return 1;
+        }
+    }
     return 0;
 }
-string cipher_text(string str,int key)
+int encipher(string plaintext,int key)
 {
-  if(key>26)
+  printf("ciphertext: ");
+  char ci;
+  int n=strlen(plaintext);
+  char ciphertext[n];
+  for(int i=0;i<n;i++)
   {
-      key=key/26;
-  }
-  for(int i=0;str[i]!='\0';i++)
-  {
-      if(isalpha(str[i]))
-      {
-          int val=(int)str[i]+key;
-          if(isupper(str[i]) && val >90)
-          {
-              str[i]=(char)(val%26+52);
-          }
-          else if(islower(str[i]) && val > 122)
-          {
-              str[i]=(char)(val%26+78);
-          }
-          else 
-          str[i]+=key;
-      }
       
+      int c=plaintext[i];
+      if(isalpha(c))
+      {
+          ci=c+key%26;     //equivalent to c+(key%26)
+          bool test_boundaries=islower(ci)||isupper(ci);
+          if(!test_boundaries)
+          {
+              ci-=26;
+          }
+      }
+      else
+      {
+          ci=c;
+      }
+      ciphertext[i]=ci;
   }
-  return str;
+  printf("%s\n",ciphertext);
+  return 0;
 }

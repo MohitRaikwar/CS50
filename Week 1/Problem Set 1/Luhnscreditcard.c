@@ -8,9 +8,6 @@ int firsttwo(long int);
 int main()
 {
  long int i =get_long("Enter card no. :");
- //printf("Enter card no :");
- //scanf("%li",&i);
- 
  printf("%li",i);
  printf("\nNo. of digits :%i",digitcalc(i));
  checkcard(i);

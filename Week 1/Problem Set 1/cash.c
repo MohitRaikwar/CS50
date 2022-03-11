@@ -11,36 +11,50 @@ int main()
     do
     {
         dollars=get_float("Enter cash owed :");
-    } while (dollars<0);
+    } while (dollars<=0);
     
     
     printf("\nEntered no. is :%f",dollars);
     int cents=round(dollars*100);
     int tmp=cents;
-    int count=0;
+    int coins=0;
 
         if(tmp>=quarter)
         {
-            count=tmp/quarter;
+            coins=tmp/quarter;
             tmp%=quarter;
         }
 
         if(tmp>=dimes)
         {
-           count+=tmp/dimes;
+           coins+=tmp/dimes;
             tmp%=dimes;
         }
         if(tmp>=nickels)
         {
-            count+=tmp/nickels;
+            coins+=tmp/nickels;
             tmp%=nickels;
         }
         if(tmp>=pennies)
         {
-            count+=tmp;
+            coins+=tmp;
 
         }
-    printf("\n%i\n",count);
+    printf("\n%i\n",coins);
     return 0;
+    /*Alternative
+    while(cents>0)
+    {
+        if(cents>=25)
+         cents-=25;
+        else if(cents>=10)
+         cents-=10;
+        else if(cents>=5)
+         cents-=5;
+        else
+         cents--;
+        coins++;
+    }
+    */
 
 }
